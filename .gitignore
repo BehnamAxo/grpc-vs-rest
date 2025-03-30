@@ -1,0 +1,19 @@
+# Binaries
+*.exe
+*.out
+*.test
+*.dll
+
+# Generated gRPC / Proto files
+grpc/generated/
+grpc/userpb/
+*.pb.go
+
+# OS / IDE junk
+.DS_Store
+.vscode/
+.idea/
+
+# Logs or temp files
+*.log
+*.tmp

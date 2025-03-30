@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package userpb;
+
+option go_package = "/userpb";
+
+message User {
+  string name = 1;
+  int32 age = 2;
+  string email = 3;
+  string phone = 4;
+}
+
+service PaymentService {
+  rpc ProcessUser(User) returns (UserAck);
+}
+
+message UserAck {
+  string message = 1;
+}
