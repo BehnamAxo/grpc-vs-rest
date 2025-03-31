@@ -4,17 +4,26 @@ package userpb;
 
 option go_package = "/userpb";
 
+message HistoryEntry {
+  int32 year = 1;
+  string event = 2;
+}
+
 message User {
   string name = 1;
   int32 age = 2;
   string email = 3;
   string phone = 4;
-}
-
-service PaymentService {
-  rpc ProcessUser(User) returns (UserAck);
+  string address = 5;
+  string bio = 6;
+  repeated string interests = 7;
+  repeated HistoryEntry history = 8;
 }
 
 message UserAck {
   string message = 1;
+}
+
+service PaymentService {
+  rpc ProcessUser(User) returns (UserAck);
 }

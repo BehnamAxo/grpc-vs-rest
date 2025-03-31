@@ -17,3 +17,6 @@ grpc/userpb/
 # Logs or temp files
 *.log
 *.tmp
+
+
+/node_modules

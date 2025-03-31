@@ -1,0 +1,37 @@
+{
+  "name": "Sir Laughsalot McGiggles Small",
+  "age": 420,
+  "email": "funnySmall@laughterverse.io",
+  "phone": "+1-800-GIGGLEZ",
+  "address": "123 Joke Lane, Comedyville, HA 12345",
+  "bio": "Sir Laughsalot is a professional comedian. ",
+  "interests": [
+    "interest_0",
+    "interest_1",
+    "interest_2",
+    "interest_3",
+    "interest_4"
+  ],
+  "history": [
+    {
+      "year": 1944,
+      "event": "Milestone event 0"
+    },
+    {
+      "year": 1945,
+      "event": "Milestone event 1"
+    },
+    {
+      "year": 1946,
+      "event": "Milestone event 2"
+    },
+    {
+      "year": 1947,
+      "event": "Milestone event 3"
+    },
+    {
+      "year": 1948,
+      "event": "Milestone event 4"
+    }
+  ]
+}

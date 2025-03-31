@@ -1,88 +1,98 @@
-# gRPC vs REST in Go 🚀
+# gRPC vs REST in Go
 
-This project compares **gRPC** and **REST** API performance using Go. It includes simple backend and payment services implemented in both styles and tests them under load using appropriate benchmarking tools.
+This project compares **gRPC** and **REST** API performance using Go. It includes services implemented in both styles and benchmarks them using realistic payloads and high-concurrency test scripts.
 
-## ⚙️ gRPC Setup (If You're Starting from Scratch)
 
-1. Initialize the module (inside the `grpc` folder):
+## Requirements
 
-  ```bash
-  go mod init grpc
-  ```
+- **Go** 1.18+
+- **Node.js** 18+
+- [`protoc`](https://grpc.io/docs/protoc-installation/)
+- [`protoc-gen-go`](https://pkg.go.dev/google.golang.org/protobuf/cmd/protoc-gen-go)
+- [`protoc-gen-go-grpc`](https://pkg.go.dev/google.golang.org/grpc/cmd/protoc-gen-go-grpc)
+- [`ghz`](https://github.com/bojand/ghz) (installed globally)
+- [`autocannon`](https://github.com/mcollina/autocannon) (installed locally in this project)
 
-2. Generate the gRPC code from your .proto file. Make sure the `generated` folder exists first.
 
-  ```bash
-  protoc --go_out=generated --go-grpc_out=generated proto/user.proto
-  ```
+## 🔧 Setup Instructions
 
-3. Install the gRPC package:
+### gRPC Setup
 
-  ```bash
-  go get google.golang.org/grpc
-  ```
- Make sure protoc, protoc-gen-go, and protoc-gen-go-grpc are installed and available in your PATH.
+1. Initialize Go modules inside the `grpc` folder:
 
-## How to Run
+   ```bash
+   cd grpc
+   go mod init grpc
+   ```
 
-### ✅ gRPC
+2. Generate the gRPC Go code from the .proto file (from the project root):
 
-1. **Start gRPC payment service:**
+   ```bash
+    protoc --go_out=. --go-grpc_out=. proto/user.proto
+   ```
 
-```bash
-cd grpc/payment_service
-go run main.go
-```
+3. Install the gRPC dependency:
 
-2. **Run gRPC backend client:**
+   ```bash
+    go get google.golang.org/grpc
+   ```
 
-```bash
-cd grpc/backend_service
-go run main.go
-```
 
-3. **Benchmark gRPC using [`ghz`](https://github.com/bojand/ghz):**
+## Running the Services
 
-```bash
-ghz --insecure --proto ./proto/user.proto --call userpb.PaymentService.ProcessUser -d "{\"name\":\"Sir Laughsalot McGiggles\",\"age\":420,\"email\":\"funny.bone@laughterverse.io\",\"phone\":\"+1-800-GIGGLEZ\"}" -c 100 --duration 20s localhost:50051
-```
+### ▶️ gRPC Server
 
-### ✅ REST
+Start the gRPC payment service:
 
-1. **Start REST payment service:**
+   ```bash
+    cd grpc/payment_service
+    go run main.go
+   ```
 
-```bash
-cd rest/payment_service
-go run main.go
-```
+### ▶️ REST Server
 
-2. **Run REST backend client:**
+Start the gRPC payment service:
 
-```bash
-cd rest/backend_service
-go run main.go
-```
+   ```bash
+    cd rest/payment_service
+    go run main.go
+   ```
 
-3. **Benchmark REST using [`autocannon`](https://github.com/mcollina/autocannon):**
+## 🧪 Running Benchmarks
+
+### gRPC Load Test
 
 ```bash
-autocannon -c 100 -d 20 -m POST -H "Content-Type: application/json" -b "{\"name\":\"Sir Laughsalot McGiggles\",\"age\":420,\"email\":\"funny.bone@laughterverse.io\",\"phone\":\"+1-800-GIGGLEZ\"}" http://localhost:8080/process
+node grpcTest.js
 ```
 
-## 🧪 Load Testing Tools Used
 
-- 🧬 [`ghz`](https://github.com/bojand/ghz) for benchmarking **gRPC**
-- 🧪 [`autocannon`](https://github.com/mcollina/autocannon) for benchmarking **REST**
+### REST Load Test
 
-## 📦 Requirements
+```bash
+node restTest.js
+```
 
-- Go 1.18+
-- `protoc`, `protoc-gen-go`, and `protoc-gen-go-grpc` (for gRPC)
-- [`ghz`](https://github.com/bojand/ghz) for load testing gRPC
-- [`autocannon`](https://github.com/mcollina/autocannon) for load testing REST (Node.js required)
 
-## 📌 Notes
+## 📁 Payloads
 
-- gRPC uses Protocol Buffers for efficient binary encoding over HTTP/2
-- REST uses JSON over HTTP/1.1, which is more human-readable but generally slower
-- This repo demonstrates how each performs under heavy load
+This repo includes:
+
+- **`payload-small.json`** light payload
+
+- **`payload-large.json`** realistic medium payload
+
+- **`payload-huge.json`** stress test payload
+
+You can modify which payload is used by editing the script files:
+
+- `grpcTest.js`
+- `restTest.js`
+
+
+## Notes
+- gRPC uses Protocol Buffers over HTTP/2, providing smaller binary payloads and lower latency.
+
+- REST uses JSON over HTTP/1.1, which is more human-readable but typically less efficient.
+
+- This project helps you compare both under load with different payload sizes.
