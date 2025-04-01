@@ -26,7 +26,7 @@ type User struct {
 
 var requestCounter uint64
 
-func processUserHandler(w http.ResponseWriter, r *http.Request) {
+func processUser(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
@@ -58,7 +58,7 @@ func processUserHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/process", processUserHandler)
+	http.HandleFunc("/process", processUser)
 	fmt.Println("REST payment service running on port 8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
